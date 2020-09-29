@@ -3,29 +3,6 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-}
-
-MainWindow::~MainWindow()
-{
-}
-
-void MainWindow::paintEvent(QPaintEvent *) {
-
-    // Draw game view
-    // Main rectangles
-    QPainter p(this);
-    QPainterPath path;
-    path.addRoundedRect(QRectF(20, 67, 490, 660), 12, 12);
-    path.moveTo(20, 134); path.lineTo(510, 134);
-    p.setPen(QPen(QColor(0xef, 0xef, 0xee), 1));
-    p.drawPath(path);
-    // Game board
-    p.setPen(QPen(QColor(0xef, 0xef, 0xee), 2));
-    p.drawLine(90, 412, 440, 412);
-    p.drawLine(90, 532, 440, 532);
-    p.drawLine(210, 291, 210, 651);
-    p.drawLine(330, 291, 330, 651);
-
     // Draw labels
     QLabel *noughtsScoreLabel = new QLabel(this);
     noughtsScoreLabel->setText("Noughts score: 2");
@@ -69,7 +46,7 @@ void MainWindow::paintEvent(QPaintEvent *) {
     backButton->setFixedSize(230,62);
     backButton->show();
 
-    QPushButton *newGameButton = new QPushButton("New game", this);
+    newGameButton = new QPushButton("New game", this);
     newGameButton->setStyleSheet(
         "QPushButton{ background-color: #efefee;"
         "border-style: solid;"
@@ -124,4 +101,38 @@ void MainWindow::paintEvent(QPaintEvent *) {
     crossGameImageLabel2->setGeometry(360, 560, 64, 64);
     crossGameImageLabel2->setPixmap(crossGameImage);
     crossGameImageLabel2->show();
+
+    // Handle button signal
+    connect(newGameButton, SIGNAL (released()), this, SLOT (handleButton()));
 }
+
+MainWindow::~MainWindow()
+{
+}
+
+void MainWindow::paintEvent(QPaintEvent *) {
+
+    // Draw game view
+    // Main rectangles
+    QPainter p(this);
+    QPainterPath path;
+    path.addRoundedRect(QRectF(20, 67, 490, 660), 12, 12);
+    path.moveTo(20, 134); path.lineTo(510, 134);
+    p.setPen(QPen(QColor(0xef, 0xef, 0xee), 1));
+    p.drawPath(path);
+
+    // Game board
+    p.setPen(QPen(QColor(0xef, 0xef, 0xee), 2));
+    p.drawLine(90, 412, 440, 412);
+    p.drawLine(90, 532, 440, 532);
+    p.drawLine(210, 291, 210, 651);
+    p.drawLine(330, 291, 330, 651);
+
+}
+
+void MainWindow::handleButton()
+ {
+//    qDebug() << "Button pressed";
+    // change the text
+    newGameButton->setText("Example");
+ }

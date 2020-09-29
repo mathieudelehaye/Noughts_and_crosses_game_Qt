@@ -10,14 +10,22 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QPixmap>
+#include<QDebug>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void paintEvent(QPaintEvent *);
+
+private slots:
+    void handleButton();
+
+private:
+    QPushButton *newGameButton;
 };
+
 #endif // MAINWINDOW_H
