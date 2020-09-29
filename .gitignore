@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# MacOS, other 
+.DS_Store
+build-Noughts_and_crosses-Desktop_Qt_5_15_1_clang_64bit-Debug/
