@@ -3,6 +3,6 @@ A nought and crosses game developed in C++ with Qt framework
 
 Things to improve: 
 - Finalize project 
-- Configure Qt Project to define relative paths (if possible) 
+- Check if possible to define relative file paths with Qt Project 
 - Improve image scaling for nought and cross icons on game view 
-- Use of an external CSS stylesheet 
+- Use external CSS stylesheet 
