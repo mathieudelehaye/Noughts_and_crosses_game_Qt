@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     refereeLabel->show();
 
     // Draw buttons
-    QPushButton *backButton = new QPushButton("Back", this);
+    backButton = new QPushButton("Back", this);
     backButton->setStyleSheet(
         "QPushButton{ background-color: #313131;"
         "border-style: solid;"
@@ -69,41 +69,43 @@ MainWindow::MainWindow(QWidget *parent)
     newGameButton->setFixedSize(230,62);
     newGameButton->show();
 
-    // Display images
+    // Display icon images
     QLabel *noughtIconLabel = new QLabel(this);
-    QPixmap noughtImage("../../../../Noughts_and_crosses/nought-01.png");
-    QPixmap noughtImageIcon = noughtImage.scaled(23, 23);
+    noughtImage = new QPixmap("../../../../Noughts_and_crosses/nought-01.png");
+    QPixmap noughtImageIcon = noughtImage->scaled(23, 23);
     noughtIconLabel->setGeometry(30, 92, 23, 23);
     noughtIconLabel->setPixmap(noughtImageIcon);
     noughtIconLabel->show();
 
     QLabel *crossIconLabel = new QLabel(this);
-    QPixmap crossImage("../../../../Noughts_and_crosses/cross-01.png");
-    QPixmap crossImageIcon = crossImage.scaled(23, 23);
+    crossImage = new QPixmap("../../../../Noughts_and_crosses/cross-01.png");
+    QPixmap crossImageIcon = crossImage->scaled(23, 23);
     crossIconLabel->setGeometry(295, 92, 23, 23);
     crossIconLabel->setPixmap(crossImageIcon);
     crossIconLabel->show();
 
-    // Display game images
-    QLabel *noughtGameImageLabel = new QLabel(this);
-    QPixmap noughtGameImage = noughtImage.scaled(64, 64);
-    noughtGameImageLabel->setGeometry(240, 320, 64, 64);
-    noughtGameImageLabel->setPixmap(noughtGameImage);
-    noughtGameImageLabel->show();
+    // Add clickable areas
+    for(int i = 0; i < 9; i++) {
+        clickableLabels[i] = new ClickableLabel(this);
+        int x_coordinate = i % 3;
+        int y_coordinate = i  / 3;
+        clickableLabels[i]->setGeometry(85 + x_coordinate * 120, 291 + y_coordinate * 120, 120, 120);
+        clickableLabels[i]->setAlignment (Qt::AlignCenter);
+        connect(clickableLabels[i], SIGNAL(clicked(int, int)), this, SLOT(slotClicked(int, int)));
+    }
 
-    QLabel *crossGameImageLabel1 = new QLabel(this);
-    QPixmap crossGameImage = crossImage.scaled(64, 64);
-    crossGameImageLabel1->setGeometry(240, 440, 64, 64);
-    crossGameImageLabel1->setPixmap(crossGameImage);
-    crossGameImageLabel1->show();
+    // Reset slot symbols
+    for(int i = 0; i < 9; i++) {
+        currentSlotSymbols[i] = 0;
+    }
 
-    QLabel *crossGameImageLabel2 = new QLabel(this);
-    crossGameImageLabel2->setGeometry(360, 560, 64, 64);
-    crossGameImageLabel2->setPixmap(crossGameImage);
-    crossGameImageLabel2->show();
+    // Handle button signals
+    connect(backButton, SIGNAL (released()), this, SLOT (handleBackButton()));
+    connect(newGameButton, SIGNAL (released()), this, SLOT (handleNewGameButton()));
 
-    // Handle button signal
-    connect(newGameButton, SIGNAL (released()), this, SLOT (handleButton()));
+    // Resize images to be displayed in game
+    noughtGameImage = new QPixmap(noughtImage->scaled(64, 64));
+    crossGameImage = new QPixmap(crossImage->scaled(64, 64));
 }
 
 MainWindow::~MainWindow()
@@ -123,16 +125,46 @@ void MainWindow::paintEvent(QPaintEvent *) {
 
     // Game board
     p.setPen(QPen(QColor(0xef, 0xef, 0xee), 2));
-    p.drawLine(90, 412, 440, 412);
-    p.drawLine(90, 532, 440, 532);
+    p.drawLine(85, 411, 445, 411);
+    p.drawLine(85, 531, 445, 531);
     p.drawLine(210, 291, 210, 651);
     p.drawLine(330, 291, 330, 651);
 
+    // Display game images
+    for(int i = 0; i < 9; i++) {
+        switch(currentSlotSymbols[i]) {
+
+        case 1: // cross symbol in slot
+            clickableLabels[i]->setPixmap(*crossGameImage);
+            break;
+        case 2: // nought symbol in slot
+            clickableLabels[i]->setPixmap(*noughtGameImage);
+            break;
+        default:
+            clickableLabels[i]->clear();
+        }
+    }
+
+    // Check if a player has won
+
 }
 
-void MainWindow::handleButton()
- {
-//    qDebug() << "Button pressed";
-    // change the text
-    newGameButton->setText("Example");
+void MainWindow::handleBackButton() {
+    qDebug() << "Back Button pressed";
+//    backButton->setText("BB");
+}
+
+void MainWindow::handleNewGameButton() {
+    qDebug() << "New Game Button pressed";
+//    newGameButton->setText("NGB");
  }
+
+void MainWindow::slotClicked(int xPos, int yPos) {
+//    qDebug()<< "label clicked at " << xPos + 60 << ", " << yPos + 60;
+    int slotIndex = ((yPos - 291) / 120) * 3 + (xPos - 85) / 120;
+    currentSlotSymbols[slotIndex] ++;
+    if(currentSlotSymbols[slotIndex] >= 3) {
+        currentSlotSymbols[slotIndex] = 0;
+    }
+//    qDebug() << slotIndex << ": " << currentSlotSymbols[slotIndex];
+}

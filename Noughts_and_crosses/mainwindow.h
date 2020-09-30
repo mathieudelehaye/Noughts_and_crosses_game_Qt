@@ -10,7 +10,10 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QPixmap>
-#include<QDebug>
+#include <QDebug>
+#include <QMouseEvent>
+
+#include "clickablelabel.h"
 
 class MainWindow : public QMainWindow
 {
@@ -22,10 +25,17 @@ public:
     void paintEvent(QPaintEvent *);
 
 private slots:
-    void handleButton();
+    void handleBackButton();
+    void handleNewGameButton();
+    void slotClicked(int, int);
 
 private:
+    QPixmap * noughtImage, * crossImage;    /* raw images read from file */
+    QPixmap * noughtGameImage, * crossGameImage;    /* resized game images */
     QPushButton *newGameButton;
+    QPushButton *backButton;
+    ClickableLabel* clickableLabels[9];
+    int currentSlotSymbols[9];   /* Slot symbols: 0: empty, 1: cross, 2: nought */
 };
 
 #endif // MAINWINDOW_H
