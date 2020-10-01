@@ -3,21 +3,18 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    // Draw labels
-    QLabel *noughtsScoreLabel = new QLabel(this);
-    noughtsScoreLabel->setText("Noughts score: 2");
+    // Create labels
+    noughtsScoreLabel = new QLabel(this);
     noughtsScoreLabel->setGeometry(60, 65, 300, 80);
     noughtsScoreLabel->setStyleSheet("color: #efefee; font: 21pt 'Roboto'; font-weight: bold;");
     noughtsScoreLabel->show();
 
-    QLabel *crossesScoreLabel = new QLabel(this);
-    crossesScoreLabel->setText("Crosses score: 2");
+    crossesScoreLabel = new QLabel(this);
     crossesScoreLabel->setGeometry(325, 65, 300, 80);
     crossesScoreLabel->setStyleSheet("color: #efefee; font: 21pt 'Roboto'; font-weight: bold;");
     crossesScoreLabel->show();
 
-    QLabel *refereeLabel = new QLabel(this);
-    refereeLabel->setText("noughts turn!");
+    refereeLabel = new QLabel(this);
     refereeLabel->setGeometry(180,150,300,80);
     refereeLabel->setStyleSheet("color: #efefee; font: 31pt 'Roboto Condensed'; font-weight: normal;");
     refereeLabel->show();
@@ -99,13 +96,21 @@ MainWindow::MainWindow(QWidget *parent)
         currentSlotSymbols[i] = 0;
     }
 
-    // Handle button signals
-    connect(backButton, SIGNAL (released()), this, SLOT (handleBackButton()));
-    connect(newGameButton, SIGNAL (released()), this, SLOT (handleNewGameButton()));
-
     // Resize images to be displayed in game
     noughtGameImage = new QPixmap(noughtImage->scaled(64, 64));
     crossGameImage = new QPixmap(crossImage->scaled(64, 64));
+
+    // Create game referee and game variables
+    referee = new GameReferee();
+    winner = 0;
+    playerTurn = 1;
+    for(int i = 0; i < 2; i++) {
+        scoreTally[i] = 0;
+    }
+
+    // Handle button signals
+    connect(backButton, SIGNAL (released()), this, SLOT (handleBackButton()));
+    connect(newGameButton, SIGNAL (released()), this, SLOT (handleNewGameButton()));
 }
 
 MainWindow::~MainWindow()
@@ -146,7 +151,16 @@ void MainWindow::paintEvent(QPaintEvent *) {
     }
 
     // Check if a player has won
+    int previousWinnerValue = winner;
+    winner = referee->checkForWinnerOrDraw(currentSlotSymbols);
+    if(winner != previousWinnerValue) {
+        qDebug() << "Winner is: " << winner;
+    }
 
+    // Display game labels
+    noughtsScoreLabel->setText("Noughts score: " + QString::number(scoreTally[0]));
+    crossesScoreLabel->setText("Crosses score: " + QString::number(scoreTally[1]));
+    refereeLabel->setText("noughts turn!");
 }
 
 void MainWindow::handleBackButton() {

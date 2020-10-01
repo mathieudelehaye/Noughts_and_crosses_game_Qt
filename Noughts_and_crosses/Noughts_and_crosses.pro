@@ -11,11 +11,13 @@ CONFIG += c++11
 
 SOURCES += \
     clickablelabel.cpp \
+    gamereferee.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     clickablelabel.h \
+    gamereferee.h \
     mainwindow.h
 
 TRANSLATIONS += \
