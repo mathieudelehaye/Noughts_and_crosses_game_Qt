@@ -22,6 +22,9 @@ public:
 private slots:
     void handleStartButton();
 
+signals:
+    void leaving(int);
+
 private:
     QLabel * noughtsWordLabel, * crossesWordLabel, *  plusSignLabel, * noughtIconLabel, * crossIconLabel;  /* title labels */
     QPushButton *startButton;

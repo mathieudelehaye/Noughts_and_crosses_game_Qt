@@ -15,8 +15,10 @@ public:
     ~MainWindow();
     void paintEvent(QPaintEvent *);
 
-private:
+private slots:
+    void viewChanged(int);
 
+private:
     // Assets
     QPixmap * noughtImage, * crossImage;    /* raw images read from file */
 

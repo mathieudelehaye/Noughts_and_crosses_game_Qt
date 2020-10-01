@@ -53,7 +53,7 @@ HomeView::HomeView(QWidget * parent, QPixmap * crossImage, QPixmap * noughtImage
     crossIconLabel->setPixmap(crossImageIcon);
 
     // Handle button signals
-    this->connect(startButton, SIGNAL (released()), this, SLOT (handleStartButton()));
+    connect(startButton, SIGNAL (released()), this, SLOT (handleStartButton()));
 }
 
 HomeView::~HomeView() {
@@ -102,5 +102,5 @@ void HomeView::draw(QWidget * parent) {
 
 void HomeView::handleStartButton() {
     qDebug() << "Start Button pressed";
-//    backButton->setText("BB");
+    emit leaving(0);    // 0: leaving home view
 }
