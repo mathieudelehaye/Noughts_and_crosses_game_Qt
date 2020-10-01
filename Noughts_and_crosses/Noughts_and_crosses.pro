@@ -12,12 +12,16 @@ CONFIG += c++11
 SOURCES += \
     clickablelabel.cpp \
     gamereferee.cpp \
+    gameview.cpp \
+    homeview.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     clickablelabel.h \
     gamereferee.h \
+    gameview.h \
+    homeview.h \
     mainwindow.h
 
 TRANSLATIONS += \
