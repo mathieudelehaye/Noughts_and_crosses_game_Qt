@@ -18,6 +18,9 @@ class GameView : public QObject
 
 public:
     GameView(QWidget *, QPixmap*, QPixmap*);
+    ~GameView();
+    void enable();
+    void disable();
     void draw(QWidget *);
 
 private slots:
@@ -26,7 +29,7 @@ private slots:
     void slotClicked(int, int);
 
 private:
-    QLabel * noughtsScoreLabel, * crossesScoreLabel, *  refereeLabel;  /* game labels */
+    QLabel * noughtsScoreLabel, * crossesScoreLabel, *  refereeLabel, * noughtIconLabel, * crossIconLabel;  /* game labels */
     QPixmap * noughtGameImage, * crossGameImage;    /* resized game images */
     QPushButton *newGameButton;
     QPushButton *backButton;

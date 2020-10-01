@@ -9,32 +9,22 @@
 #include <QLabel>
 #include <QObject>
 
-#include "gamereferee.h"
-#include "clickablelabel.h"
-
 class HomeView : public QObject
 {
     Q_OBJECT
 public:
     HomeView(QWidget *, QPixmap*, QPixmap*);
+    ~HomeView();
+    void enable();
+    void disable();
     void draw(QWidget *);
 
 private slots:
-    void handleBackButton();
-    void handleNewGameButton();
-    void slotClicked(int, int);
+    void handleStartButton();
 
 private:
-    QLabel * noughtsScoreLabel, * crossesScoreLabel, *  refereeLabel;  /* game labels */
-    QPixmap * noughtGameImage, * crossGameImage;    /* resized game images */
-    QPushButton *newGameButton;
-    QPushButton *backButton;
-    GameReferee *referee;
-    int winner; /* 1: no winner, 1: cross wins, 2: nought wins, 3: draw */
-    int playerTurn; /* 1: cross, 2: nought */
-    int scoreTally[2];
-    ClickableLabel* clickableLabels[9];
-    int currentSlotSymbols[9];  /* Slot symbols: 0: empty, 1: cross, 2: nought */
+    QLabel * noughtsWordLabel, * crossesWordLabel, *  plusSignLabel, * noughtIconLabel, * crossIconLabel;  /* title labels */
+    QPushButton *startButton;
 };
 
 #endif // HOMEVIEW_H

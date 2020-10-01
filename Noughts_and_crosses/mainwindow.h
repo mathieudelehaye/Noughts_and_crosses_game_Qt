@@ -17,7 +17,7 @@ public:
 
 private:
 
-    // Asssets
+    // Assets
     QPixmap * noughtImage, * crossImage;    /* raw images read from file */
 
     // View management

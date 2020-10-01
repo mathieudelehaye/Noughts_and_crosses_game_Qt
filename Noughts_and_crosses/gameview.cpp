@@ -2,20 +2,18 @@
 
 GameView::GameView(QWidget * parent, QPixmap * crossImage, QPixmap * noughtImage) {
 
+    // Draw labels
     noughtsScoreLabel = new QLabel(parent);
     noughtsScoreLabel->setGeometry(60, 65, 300, 80);
     noughtsScoreLabel->setStyleSheet("color: #efefee; font: 21pt 'Roboto'; font-weight: bold;");
-    noughtsScoreLabel->show();
 
     crossesScoreLabel = new QLabel(parent);
     crossesScoreLabel->setGeometry(325, 65, 300, 80);
     crossesScoreLabel->setStyleSheet("color: #efefee; font: 21pt 'Roboto'; font-weight: bold;");
-    crossesScoreLabel->show();
 
     refereeLabel = new QLabel(parent);
     refereeLabel->setGeometry(180,150,300,80);
     refereeLabel->setStyleSheet("color: #efefee; font: 31pt 'Roboto Condensed'; font-weight: normal;");
-    refereeLabel->show();
 
     // Draw buttons
     backButton = new QPushButton("Back", parent);
@@ -39,7 +37,6 @@ GameView::GameView(QWidget * parent, QPixmap * crossImage, QPixmap * noughtImage
     );
     backButton->move(20,760);
     backButton->setFixedSize(230,62);
-    backButton->show();
 
     newGameButton = new QPushButton("New game", parent);
     newGameButton->setStyleSheet(
@@ -62,22 +59,17 @@ GameView::GameView(QWidget * parent, QPixmap * crossImage, QPixmap * noughtImage
     );
     newGameButton->move(270,760);
     newGameButton->setFixedSize(230,62);
-    newGameButton->show();
 
     // Display icon images
-    QLabel *noughtIconLabel = new QLabel(parent);
-    noughtImage = new QPixmap("../../../../Noughts_and_crosses/nought-01.png");
+    noughtIconLabel = new QLabel(parent);
     QPixmap noughtImageIcon = noughtImage->scaled(23, 23);
     noughtIconLabel->setGeometry(30, 92, 23, 23);
     noughtIconLabel->setPixmap(noughtImageIcon);
-    noughtIconLabel->show();
 
-    QLabel *crossIconLabel = new QLabel(parent);
-    crossImage = new QPixmap("../../../../Noughts_and_crosses/cross-01.png");
+    crossIconLabel = new QLabel(parent);
     QPixmap crossImageIcon = crossImage->scaled(23, 23);
     crossIconLabel->setGeometry(295, 92, 23, 23);
     crossIconLabel->setPixmap(crossImageIcon);
-    crossIconLabel->show();
 
     // Add clickable areas
     for(int i = 0; i < 9; i++) {
@@ -109,6 +101,48 @@ GameView::GameView(QWidget * parent, QPixmap * crossImage, QPixmap * noughtImage
     // Handle button signals
     this->connect(backButton, SIGNAL (released()), this, SLOT (handleBackButton()));
     this->connect(newGameButton, SIGNAL (released()), this, SLOT (handleNewGameButton()));
+}
+
+GameView::~GameView() {
+
+    delete noughtsScoreLabel;
+    delete crossesScoreLabel;
+    delete refereeLabel;
+    delete backButton;
+    delete newGameButton;
+    delete noughtIconLabel;
+    delete crossIconLabel;
+    for(int i = 0; i < 9; i++) {
+        delete clickableLabels[i];
+    }
+    delete noughtGameImage;
+    delete crossGameImage;
+    delete referee;
+
+}
+
+void GameView::enable() {
+
+    // Show all widgets when switching to the view
+    crossesScoreLabel->show();
+    noughtsScoreLabel->show();
+    crossIconLabel->show();
+    noughtIconLabel->show();
+    refereeLabel->show();
+    newGameButton->show();
+    backButton->show();
+}
+
+void GameView::disable() {
+
+    // Hide widgets when leaving view
+    crossesScoreLabel->hide();
+    noughtsScoreLabel->hide();
+    crossIconLabel->hide();
+    noughtIconLabel->hide();
+    refereeLabel->hide();
+    newGameButton->hide();
+    backButton->hide();
 }
 
 void GameView::draw(QWidget * parent) {
