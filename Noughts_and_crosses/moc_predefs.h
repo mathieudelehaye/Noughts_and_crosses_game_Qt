@@ -187,7 +187,6 @@
 #define __LP64__ 1
 #define __MACH__ 1
 #define __MMX__ 1
-#define __NO_INLINE__ 1
 #define __NO_MATH_INLINES 1
 #define __OBJC_BOOL_IS_BOOL 0
 #define __OPENCL_MEMORY_SCOPE_ALL_SVM_DEVICES 3
@@ -195,6 +194,7 @@
 #define __OPENCL_MEMORY_SCOPE_SUB_GROUP 4
 #define __OPENCL_MEMORY_SCOPE_WORK_GROUP 1
 #define __OPENCL_MEMORY_SCOPE_WORK_ITEM 0
+#define __OPTIMIZE__ 1
 #define __ORDER_BIG_ENDIAN__ 4321
 #define __ORDER_LITTLE_ENDIAN__ 1234
 #define __ORDER_PDP_ENDIAN__ 3412
@@ -339,7 +339,7 @@
 #define __UINT_LEAST8_MAX__ 255
 #define __UINT_LEAST8_TYPE__ unsigned char
 #define __USER_LABEL_PREFIX__ _
-#define __VERSION__ "Apple LLVM 12.0.0 (clang-1200.0.32.2)"
+#define __VERSION__ "Apple LLVM 12.0.0 (clang-1200.0.32.28)"
 #define __WCHAR_MAX__ 2147483647
 #define __WCHAR_TYPE__ int
 #define __WCHAR_WIDTH__ 32
@@ -354,7 +354,7 @@
 #define __clang_major__ 12
 #define __clang_minor__ 0
 #define __clang_patchlevel__ 0
-#define __clang_version__ "12.0.0 (clang-1200.0.32.2)"
+#define __clang_version__ "12.0.0 (clang-1200.0.32.28)"
 #define __code_model_small_ 1
 #define __core2 1
 #define __core2__ 1

@@ -1,11 +1,12 @@
 #include "mainwindow.h"
+#include <QCoreApplication>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-{
+{    
     // Load asset images
-    noughtImage = new QPixmap("../../../../Noughts_and_crosses/nought-01.png");
-    crossImage = new QPixmap("../../../../Noughts_and_crosses/cross-01.png");
+    noughtImage = new QPixmap(QCoreApplication::applicationDirPath() + "/../../../../nought-01.png");
+    crossImage = new QPixmap(QCoreApplication::applicationDirPath() + "/../../../../cross-01.png");
 
     // Initialize views
     viewToDisplay = 0;
